@@ -77,58 +77,51 @@ def test_indexes(arctic):
     c = arctic._conn
     arctic.initialize_library("library", VERSION_STORE, segment='month')
     chunk = c.arctic.library.index_information()
-    index_version = chunk['_id_']['v']  # Mongo 3.2 has index v1, 3.4 and 3.5 have v2 (3.4 can run in compabitility mode with v1)
-    assert chunk == {u'_id_': {u'key': [(u'_id', 1)], u'ns': u'arctic.library', u'v': index_version},
+    index_version = chunk['_id_']['v']  # Mongo 3.2 has index v1, 3.4 and 3.5 have v2 (3.4 can run in compatibility mode with v1)
+    # FIXME: CM#002 - (new expected)
+    assert chunk == {u'_id_': {u'key': [(u'_id', 1)], u'v': index_version},
                      u'symbol_1_parent_1_segment_1': {u'background': True,
                                                       u'key': [(u'symbol', 1),
                                                                (u'parent', 1),
                                                                (u'segment', 1)],
-                                                      u'ns': u'arctic.library',
                                                       u'unique': True,
                                                       u'v': index_version},
                      u'symbol_1_sha_1': {u'background': True,
                                          u'key': [(u'symbol', 1), (u'sha', 1)],
-                                         u'ns': u'arctic.library',
                                          u'unique': True,
                                          u'v': index_version},
                      u'symbol_hashed': {u'background': True,
                                         u'key': [(u'symbol', u'hashed')],
-                                        u'ns': u'arctic.library',
                                         u'v': index_version},
                      u'symbol_1_sha_1_segment_1': {u'background': True,
                                                    u'key': [(u'symbol', 1), (u'sha', 1), (u'segment', 1)],
-                                                   u'ns': u'arctic.library',
                                                    u'unique': True,
                                                    u'v': index_version}}
     snapshots = c.arctic.library.snapshots.index_information()
+    # FIXME: CM#002 - (new expected)
     assert snapshots == {u'_id_': {u'key': [(u'_id', 1)],
-                                               u'ns': u'arctic.library.snapshots',
                                                u'v': index_version},
                                      u'name_1': {u'background': True,
                                                  u'key': [(u'name', 1)],
-                                                 u'ns': u'arctic.library.snapshots',
                                                  u'unique': True,
                                                  u'v': index_version}}
     versions = c.arctic.library.versions.index_information()
+    # FIXME: CM#002 - (new expected)
     assert versions == {u'_id_': {u'key': [(u'_id', 1)],
-                                           u'ns': u'arctic.library.versions',
                                            u'v': index_version},
                                  u'symbol_1__id_-1': {u'background': True,
                                                       u'key': [(u'symbol', 1), (u'_id', -1)],
-                                                      u'ns': u'arctic.library.versions',
                                                       u'v': index_version},
                                  u'symbol_1_version_-1': {u'background': True,
                                                           u'key': [(u'symbol', 1), (u'version', -1)],
-                                                          u'ns': u'arctic.library.versions',
                                                           u'unique': True,
                                                           u'v': index_version}}
     version_nums = c.arctic.library.version_nums.index_information()
+    # FIXME: CM#002 - (new expected)
     assert version_nums == {u'_id_': {u'key': [(u'_id', 1)],
-                                               u'ns': u'arctic.library.version_nums',
                                                u'v': index_version},
                                      u'symbol_1': {u'background': True,
                                                    u'key': [(u'symbol', 1)],
-                                                   u'ns': u'arctic.library.version_nums',
                                                    u'unique': True,
                                                    u'v': index_version}}
 
